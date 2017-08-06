@@ -27,12 +27,14 @@ library
   hs-source-dirs:      src
   exposed-modules:
     Game.TCOD
+    Game.TCOD.Color
     Game.TCOD.Console
     Game.TCOD.Context
   include-dirs:
     libtcod/include
   c-sources:
     src/Game/TCOD/Console.c
+    src/Game/TCOD/Color.c
   build-depends:
       base                      >= 4.7      && < 5
     , inline-c                  >= 0.5      && < 0.6

@@ -2,6 +2,8 @@
 {-# LANGUAGE OverloadedLists #-}
 module Game.TCOD.Context(
     tcodContext
+  -- * Types
+  , Color(..)
   -- * Reexports
   , C.context
   , C.include
@@ -15,9 +17,19 @@ import qualified Language.C.Inline as C
 import qualified Language.C.Inline.Context as C
 import qualified Language.C.Types as C
 
+import Data.Word
+import GHC.Generics
+
+-- | 24 bit color
+data Color = Color {
+  colorR :: {-# UNPACK #-} !Word8
+, colorG :: {-# UNPACK #-} !Word8
+, colorB :: {-# UNPACK #-} !Word8
+} deriving (Eq, Show, Generic)
+
 tcodContext :: C.Context
 tcodContext = mempty {
     C.ctxTypesTable = [
-      -- (C.TypeName "?", [t| ? |])
+      (C.TypeName "TCOD_color_t", [t| Color |])
     ]
   }
