@@ -37,6 +37,11 @@ resolver: lts-9.0
 # will not be run. This is useful for tweaking upstream packages.
 packages:
 - '.'
+- location:
+    git: https://github.com/Teaspot-Studio/inline-c.git
+    commit: 29fdcec7292bc1fe0859548de42608a5a243df10
+  extra-dep: true
+
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
 extra-deps: []
