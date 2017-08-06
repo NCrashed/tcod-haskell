@@ -1,1 +1,14 @@
 .stack-work
+
+# tcod garbage
+libtcod/samples/.deps/
+libtcod/samples/.dirstamp
+libtcod/src/.deps/
+libtcod/src/.dirstamp
+libtcod/src/gui/.deps/
+libtcod/src/gui/.dirstamp
+libtcod/src/png/.deps/
+libtcod/src/png/.dirstamp
+
+# generated C files 
+src/Game/TCOD/*.c

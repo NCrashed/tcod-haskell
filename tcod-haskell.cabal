@@ -9,9 +9,15 @@ author:              Anton Gushcha
 maintainer:          ncrashed@gmail.com
 copyright:           2017 Anton Gushcha
 category:            Game
-build-type:          Simple
+build-type:          Custom
 extra-source-files:  README.md
 cabal-version:       >=1.10
+
+custom-setup
+  setup-depends:
+      base        >= 4.5     && < 4.11
+    , Cabal                     < 1.25
+    , directory   >= 1.0     && < 2.0
 
 flag examples
   description: build engine examples
@@ -21,7 +27,12 @@ library
   hs-source-dirs:      src
   exposed-modules:
     Game.TCOD
-  -- c-sources:
+    Game.TCOD.Console
+    Game.TCOD.Context
+  include-dirs:
+    libtcod/include
+  c-sources:
+    src/Game/TCOD/Console.c
   build-depends:
       base                      >= 4.7      && < 5
     , inline-c                  >= 0.5      && < 0.6
