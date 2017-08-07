@@ -1,7 +1,7 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE CPP                      #-}
 module Game.TCOD.ConsoleTypes(
-    TCODConsole
+    TCODConsole(..)
   , TCODKeyCode(..)
   , TCODKey(..)
   , tcodKeyTextSize
@@ -28,7 +28,8 @@ include "console_types.h"
 include "string.h"
 
 -- | Tag to track pointer to `TCOD_console_t`
-type TCODConsole = Ptr ()
+newtype TCODConsole = TCODConsole { unTCODConsole :: Ptr () }
+  deriving (Eq, Ord, Show, Generic)
 
 -- | Names for keyboard keys
 data TCODKeyCode =
