@@ -29,6 +29,7 @@ library
     Game.TCOD
     Game.TCOD.Color
     Game.TCOD.Console
+    Game.TCOD.ConsoleTypes
     Game.TCOD.Context
   include-dirs:
     libtcod/include
