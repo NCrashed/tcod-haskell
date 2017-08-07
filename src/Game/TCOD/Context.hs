@@ -9,7 +9,6 @@ module Game.TCOD.Context(
   , C.include
   , C.verbatim
   , C.exp
-  , C.pure
   , C.block
   ) where
 
@@ -17,6 +16,7 @@ import qualified Language.C.Inline as C
 import qualified Language.C.Inline.Context as C
 import qualified Language.C.Types as C
 
+import Data.Monoid
 import Data.Word
 import GHC.Generics
 
@@ -25,10 +25,10 @@ data Color = Color {
   colorR :: {-# UNPACK #-} !Word8
 , colorG :: {-# UNPACK #-} !Word8
 , colorB :: {-# UNPACK #-} !Word8
-} deriving (Eq, Show, Generic)
+} deriving (Eq, Ord, Show, Generic)
 
 tcodContext :: C.Context
-tcodContext = mempty {
+tcodContext = C.baseCtx <> mempty {
     C.ctxTypesTable = [
       (C.TypeName "TCOD_color_t", [t| Color |])
     ]
