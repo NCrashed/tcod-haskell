@@ -32,12 +32,14 @@ library
     Game.TCOD.ConsoleTypes
     Game.TCOD.Context
     Game.TCOD.Image
+    Game.TCOD.List
   include-dirs:
     libtcod/include
   c-sources:
     src/Game/TCOD/Color.c
     src/Game/TCOD/Console.c
     src/Game/TCOD/Image.c
+    src/Game/TCOD/List.c
   build-depends:
       base                      >= 4.7      && < 5
     , containers                >= 0.5      && < 0.6
