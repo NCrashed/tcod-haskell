@@ -10,10 +10,12 @@ module Game.TCOD.ConsoleTypes(
   , TCODBackgroundFlag(..)
   , TCODKeyStatus(..)
   , TCODFontFlag(..)
+  , combineFontFlags
   , TCODRenderer(..)
   , TCODAlignment(..)
   ) where
 
+import Data.Bits
 import Data.Char
 import Data.Maybe
 import Foreign
@@ -21,6 +23,8 @@ import Foreign.C
 import GHC.Generics
 
 import Game.TCOD.Context as C
+
+import qualified Data.Foldable as F
 
 context tcodContext
 #include "console_types.h"
@@ -496,6 +500,10 @@ instance Enum TCODFontFlag where
     FontLayoutAsciiInRow -> 2
     FontTypeGreyScale -> 4
     FontLayoutTcod -> 8
+
+-- | Assemble flags into int field
+combineFontFlags :: Foldable f => f TCODFontFlag -> Int
+combineFontFlags = F.foldl' (\acc v -> acc .&. fromEnum v) 0 
 
 -- | Availiable renderers
 data TCODRenderer =
