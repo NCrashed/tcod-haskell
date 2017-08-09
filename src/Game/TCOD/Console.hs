@@ -52,6 +52,28 @@ module Game.TCOD.Console(
   , consoleGetFadingColor
   , consoleFlush
   , consoleSetColorControl
+  , consoleCheckForKeyPress
+  , consoleWaitForKeyPress
+  , consoleIsKeyPressed
+  , consoleFromFile
+  , consoleLoadAsc
+  , consoleLoadApf
+  , consoleSaveAsc
+  , consoleSaveApf
+  , consoleNew
+  , consoleGetWidth
+  , consoleGetHeight
+  , consoleSetKeyColor
+  , consoleBlit
+  , consoleDelete
+  , consoleCredits
+  , consoleCreditsReset
+  , consoleCreditsRender
+  , consoleFromXp
+  , consoleLoadXp
+  , consoleSaveXp
+  , consoleListFromXp
+  , consoleListSaveXp
   ) where
 
 import Game.TCOD.Color
@@ -881,3 +903,198 @@ consoleIsKeyPressed :: TCODKeyCode -> IO Bool
 consoleIsKeyPressed kc = do
   let kc' = fromIntegral . fromEnum $ kc
   toBool <$> [C.exp| int { (int)TCOD_console_is_key_pressed((TCOD_keycode_t)$(int kc')) } |]
+
+-- | Creating an offscreen console from a .asc or .apf file
+--
+-- You can create an offscreen console from a file created with Ascii Paint with this constructor
+consoleFromFile :: FilePath
+  -> IO TCODConsole
+consoleFromFile p = withCString p $ \p' ->
+  TCODConsole <$> [C.exp| void* { TCOD_console_from_file($(const char* p')) } |]
+
+-- | Loading an offscreen console from a .asc file
+--
+-- You can load data from a file created with Ascii Paint with this function.
+-- When needed, the console will be resized to fit the file size. The function
+-- returns false if it couldn't read the file.
+consoleLoadAsc :: TCODConsole -- ^ the offscreen console handler or NULL for the root console
+  -> FilePath -- ^ path to the .asc file created with Ascii Paint
+  -> IO Bool
+consoleLoadAsc (TCODConsole l) p = withCString p $ \p' ->
+  toBool <$> [C.exp| int { (int)TCOD_console_load_asc($(void* l), $(const char* p')) } |]
+
+-- | Loading an offscreen console from a .apf file
+--
+-- You can load data from a file created with Ascii Paint with this function.
+-- When needed, the console will be resized to fit the file size. The function
+-- returns false if it couldn't read the file.
+consoleLoadApf :: TCODConsole -- ^ the offscreen console handler or NULL for the root console
+  -> FilePath -- ^ path to the .apf file created with Ascii Paint
+  -> IO Bool
+consoleLoadApf (TCODConsole l) p = withCString p $ \p' ->
+  toBool <$> [C.exp| int { (int)TCOD_console_load_apf($(void* l), $(const char* p')) } |]
+
+-- | Saving a console to a .asc file
+--
+-- You can save data from a console to Ascii Paint format with this function.
+-- The function returns false if it couldn't write the file. This is the only
+-- ASC function that works also with the root console !
+consoleSaveAsc :: TCODConsole -- ^ the offscreen console handler or NULL for the root console
+  -> FilePath -- ^ path to the .asc file created with Ascii Paint
+  -> IO Bool
+consoleSaveAsc (TCODConsole l) p = withCString p $ \p' ->
+  toBool <$> [C.exp| int { (int)TCOD_console_save_asc($(void* l), $(const char* p')) } |]
+
+-- | Saving a console to a .apf file
+--
+-- You can save data from a console to Ascii Paint format with this function.
+-- The function returns false if it couldn't write the file. This is the only
+-- ASC function that works also with the root console !
+consoleSaveApf :: TCODConsole -- ^ the offscreen console handler or NULL for the root console
+  -> FilePath -- ^ path to the .apf file created with Ascii Paint
+  -> IO Bool
+consoleSaveApf (TCODConsole l) p = withCString p $ \p' ->
+  toBool <$> [C.exp| int { (int)TCOD_console_save_apf($(void* l), $(const char* p')) } |]
+
+-- | Creating an offscreen console
+--
+-- You can create as many off-screen consoles as you want by using this function.
+-- You can draw on them as you would do with the root console, but you cannot
+-- flush them to the screen. Else, you can blit them on other consoles, including
+-- the root console. See blit. The C version of this function returns a console
+-- handler that you can use in most console drawing functions.
+consoleNew :: Int -- ^ w the console size. 0 < w
+  -> Int -- ^ h the console size. 0 < h
+  -> IO TCODConsole
+consoleNew w h = do
+  let w' = fromIntegral w
+      h' = fromIntegral h'
+  TCODConsole <$> [C.exp| void* { TCOD_console_new($(int w'), $(int h'))} |]
+
+-- | Get the console's width
+--
+-- This function returns the width of a console (either the root console or an offscreen console)
+consoleGetWidth :: TCODConsole -- ^ the offscreen console handler or NULL for the root console
+  -> IO Int
+consoleGetWidth (TCODConsole l) = fromIntegral <$> [C.exp| int {TCOD_console_get_width($(void* l))}|]
+
+-- | Get the console's height
+--
+-- This function returns the height of a console (either the root console or an offscreen console)
+consoleGetHeight :: TCODConsole -- ^ the offscreen console handler or NULL for the root console
+  -> IO Int
+consoleGetHeight (TCODConsole l) = fromIntegral <$> [C.exp| int {TCOD_console_get_height($(void* l))}|]
+
+-- | Define a blit-transparent color
+--
+-- This function defines a transparent background color for an offscreen console.
+-- All cells with this background color are ignored by the blit operation.
+-- You can use it to blit only some parts of the console.
+consoleSetKeyColor :: TCODConsole -- ^ the offscreen console handler or NULL for the root console
+  -> Color -- ^ the transparent background color
+  -> IO ()
+consoleSetKeyColor (TCODConsole l) c = with c $ \c' ->
+  [C.exp| void { TCOD_console_set_key_color($(void* l), *$(TCOD_color_t* c'))} |]
+
+-- | Blitting a console on another one
+--
+-- This function allows you to blit a rectangular area of the source console at
+-- a specific position on a destination console. It can also simulate alpha
+-- transparency with the fade parameter.
+consoleBlit :: TCODConsole -- ^ The source console that must be blitted on another one.
+  -> Int -- ^ x src. The rectangular area of the source console that will be blitted.
+         -- If wSrc and/or hSrc == 0, the source console width/height are used
+  -> Int -- ^ y src
+  -> Int -- ^ w src
+  -> Int -- ^ h src
+  -> TCODConsole -- ^ dist console. The destination console.
+  -> Int -- ^ x dst. Where to blit the upper-left corner of the source area in the destination console.
+  -> Int -- ^ y dst
+  -> Float -- ^ foreground alpha. foregroundAlpha,backgroundAlpha Alpha transparency of the blitted console.
+           -- 0.0 => The source console is completely transparent. This function does nothing.
+           -- 1.0 => The source console is opaque. Its cells replace the destination cells.
+           -- 0 < fade < 1.0 => The source console is partially blitted, simulating real transparency.
+  -> Float -- ^ background alpha
+  -> IO ()
+consoleBlit (TCODConsole src) xSrc ySrc wSrc hSrc (TCODConsole dst) xDst yDst fa ba = do
+  let xSrc' = fromIntegral xSrc
+      ySrc' = fromIntegral ySrc
+      wSrc' = fromIntegral wSrc
+      hSrc' = fromIntegral hSrc
+      xDst' = fromIntegral xDst
+      yDst' = fromIntegral yDst
+      fa' = realToFrac fa
+      ba' = realToFrac ba
+  [C.exp| void { TCOD_console_blit($(void* src), $(int xSrc'), $(int ySrc'), $(int wSrc'), $(int hSrc'), $(void* dst), $(int xDst'), $(int yDst'), $(float fa'), $(float ba')) } |]
+
+-- | Destroying an offscreen console
+--
+-- Use this function to destroy an offscreen console
+-- and release any resources allocated. Don't use it on the root console.
+consoleDelete :: TCODConsole -> IO ()
+consoleDelete (TCODConsole l) = [C.exp| void {TCOD_console_delete($(void* l))} |]
+
+-- | Using a separate credit page
+--
+-- You can print a "Powered by libtcod x.y.z" screen during your game startup simply by calling this function after initRoot.
+-- The credits screen can be skipped by pressing any key.
+consoleCredits :: IO ()
+consoleCredits = [C.exp| void {TCOD_console_credits()}|]
+
+-- | Restart the credits animation
+--
+-- When using rederCredits, you can restart the credits animation from the
+-- beginning before it's finished by calling this function.
+consoleCreditsReset :: IO ()
+consoleCreditsReset = [C.exp| void {TCOD_console_credits_reset()} |]
+
+-- | Embedding credits in an existing page
+--
+-- You can also print the credits on one of your game screens (your main menu
+-- for example) by calling this function in your main loop.
+-- This function returns true when the credits screen is finished, indicating
+-- that you no longer need to call it.
+consoleCreditsRender :: Int -- ^ x Position of the credits text in your root console
+  -> Int -- ^ y Position of the credits text in your root console
+  -> Bool -- ^ alpha If true, credits are transparently added on top of the existing screen.
+          -- For this to work, this function must be placed between your screen rendering code and the console flush.
+  -> IO Bool
+consoleCreditsRender x y a = do
+  let x' = fromIntegral x
+      y' = fromIntegral y
+      a' = fromBool a
+  toBool <$> [C.exp| int {(int)TCOD_console_credits_render($(int x'), $(int y'), $(int a')!=0)} |]
+
+-- | REXPaint support
+consoleFromXp :: FilePath -> IO TCODConsole
+consoleFromXp p = withCString p $ \p' -> TCODConsole <$>
+  [C.exp| void* { TCOD_console_from_xp($(const char* p')) } |]
+
+-- | REXPaint support
+consoleLoadXp :: TCODConsole -> FilePath -> IO Bool
+consoleLoadXp (TCODConsole l) p = withCString p $ \p' -> toBool <$>
+  [C.exp| int { (int)TCOD_console_load_xp($(void* l), $(const char* p'))}|]
+
+-- | REXPaint support
+consoleSaveXp :: TCODConsole
+  -> FilePath
+  -> Int -- ^ compress level
+  -> IO Bool
+consoleSaveXp (TCODConsole l) p c = withCString p $ \p' -> do
+  let c' = fromIntegral c
+  toBool <$> [C.exp| int { (int)TCOD_console_save_xp($(void* l), $(const char* p'), $(int c'))}|]
+
+-- | REXPaint support
+consoleListFromXp :: FilePath
+  -> IO (TCODList TCODConsole)
+consoleListFromXp p = withCString p $ \p' ->
+  TCODList <$> [C.exp| void* { TCOD_console_list_from_xp($(const char* p')) } |]
+
+-- | REXPaint support
+consoleListSaveXp :: TCODList TCODConsole
+  -> FilePath
+  -> Int -- ^ compress level
+  -> IO Bool
+consoleListSaveXp (TCODList l) p c = withCString p $ \p' -> do
+  let c' = fromIntegral c
+  toBool <$> [C.exp| int { (int)TCOD_console_list_save_xp($(void* l), $(const char* p'), $(int c')) } |]
