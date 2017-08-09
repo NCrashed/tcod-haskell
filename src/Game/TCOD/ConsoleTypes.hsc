@@ -6,7 +6,7 @@ module Game.TCOD.ConsoleTypes(
   , TCODKey(..)
   , tcodKeyTextSize
   , TCODChar(..)
-  , TCODCtrl(..)
+  , TCODColorControl(..)
   , TCODBackgroundFlag(..)
   , TCODKeyStatus(..)
   , TCODFontFlag(..)
@@ -416,8 +416,8 @@ instance Enum TCODChar where
     CharPow2 -> 253
     CharBulletSquare -> 254
 
--- | CTRL details
-data TCODCtrl =
+-- | Color control flags for console
+data TCODColorControl =
     Ctrl_1
   | Ctrl_2
   | Ctrl_3
@@ -428,7 +428,7 @@ data TCODCtrl =
   | CtrlStop
   deriving (Eq, Ord, Show, Read, Generic)
 
-instance Enum TCODCtrl where
+instance Enum TCODColorControl where
   toEnum i = case i of
     1 -> Ctrl_1
     2 -> Ctrl_2
@@ -503,7 +503,7 @@ instance Enum TCODFontFlag where
 
 -- | Assemble flags into int field
 combineFontFlags :: Foldable f => f TCODFontFlag -> Int
-combineFontFlags = F.foldl' (\acc v -> acc .&. fromEnum v) 0 
+combineFontFlags = F.foldl' (\acc v -> acc .&. fromEnum v) 0
 
 -- | Availiable renderers
 data TCODRenderer =
