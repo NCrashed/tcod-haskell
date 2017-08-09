@@ -33,6 +33,8 @@ library
     Game.TCOD.Context
     Game.TCOD.Image
     Game.TCOD.List
+    Game.TCOD.MouseTypes
+    Game.TCOD.System
   include-dirs:
     libtcod/include
   c-sources:
@@ -40,6 +42,7 @@ library
     src/Game/TCOD/Console.c
     src/Game/TCOD/Image.c
     src/Game/TCOD/List.c
+    src/Game/TCOD/System.c
   build-depends:
       base                      >= 4.7      && < 5
     , containers                >= 0.5      && < 0.6
