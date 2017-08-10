@@ -27,6 +27,7 @@ library
   hs-source-dirs:      src
   exposed-modules:
     Game.TCOD
+    Game.TCOD.Bresenham
     Game.TCOD.Color
     Game.TCOD.Console
     Game.TCOD.ConsoleTypes
@@ -40,6 +41,7 @@ library
   include-dirs:
     libtcod/include
   c-sources:
+    src/Game/TCOD/Bresenham.c
     src/Game/TCOD/Color.c
     src/Game/TCOD/Console.c
     src/Game/TCOD/ConsoleTypes.c

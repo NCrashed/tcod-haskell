@@ -47,7 +47,7 @@ Binded headers:
 - [x] impage.h
 - [x] mouse_types.h
 - [x] sys.h
-- [ ] bresenham.h
+- [x] bresenham.h
 - [ ] bsp.h
 - [x] fov_types.h
 - [x] fov.h

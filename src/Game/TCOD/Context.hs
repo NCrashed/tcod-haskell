@@ -10,6 +10,7 @@ module Game.TCOD.Context(
   , C.verbatim
   , C.exp
   , C.block
+  , C.funCtx
   ) where
 
 import qualified Language.C.Inline as C
