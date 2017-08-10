@@ -968,7 +968,7 @@ consoleNew :: Int -- ^ w the console size. 0 < w
   -> IO TCODConsole
 consoleNew w h = do
   let w' = fromIntegral w
-      h' = fromIntegral h'
+      h' = fromIntegral h
   TCODConsole <$> [C.exp| void* { TCOD_console_new($(int w'), $(int h'))} |]
 
 -- | Get the console's width

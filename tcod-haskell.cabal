@@ -31,6 +31,8 @@ library
     Game.TCOD.Console
     Game.TCOD.ConsoleTypes
     Game.TCOD.Context
+    Game.TCOD.Fov
+    Game.TCOD.FovTypes
     Game.TCOD.Image
     Game.TCOD.List
     Game.TCOD.MouseTypes
@@ -41,6 +43,7 @@ library
     src/Game/TCOD/Color.c
     src/Game/TCOD/Console.c
     src/Game/TCOD/ConsoleTypes.c
+    src/Game/TCOD/Fov.c
     src/Game/TCOD/Image.c
     src/Game/TCOD/List.c
     src/Game/TCOD/System.c
@@ -95,6 +98,26 @@ executable tcod-haskell-sample01
 
 executable tcod-haskell-sample02
   hs-source-dirs:      app/sample02
+  main-is:             Main.hs
+  ghc-options:         -Odph -fno-liberate-case -funfolding-use-threshold1000 -funfolding-keeness-factor1000 -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
+  -- other-modules:
+  build-depends:
+      base
+    , tcod-haskell
+
+  default-extensions:
+    OverloadedStrings
+    RecordWildCards
+    ScopedTypeVariables
+  default-language:    Haskell2010
+
+  if flag(examples)
+    Buildable: True
+  else
+    Buildable: False
+
+executable tcod-haskell-sample03
+  hs-source-dirs:      app/sample03
   main-is:             Main.hs
   ghc-options:         -Odph -fno-liberate-case -funfolding-use-threshold1000 -funfolding-keeness-factor1000 -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
   -- other-modules:
