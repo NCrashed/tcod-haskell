@@ -53,12 +53,13 @@ Binded headers:
 - [x] fov.h
 - [ ] heightmap.h
 - [ ] libtcod_version.h
-- [ ] mersenne_types.h
+- [x] mersenne_types.h
+- [ ] mersenne.h
 - [ ] mouse.h
 - [ ] namegen.h
 - [ ] noise_defaults.h
 - [ ] noise.h
 - [ ] path.h
-- [ ] tree.h
+- [x] tree.h
 - [ ] textfield.h
 - [ ] gui/*.h

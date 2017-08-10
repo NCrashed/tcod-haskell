@@ -28,6 +28,7 @@ library
   exposed-modules:
     Game.TCOD
     Game.TCOD.Bresenham
+    Game.TCOD.BSP
     Game.TCOD.Color
     Game.TCOD.Console
     Game.TCOD.ConsoleTypes
@@ -36,12 +37,15 @@ library
     Game.TCOD.FovTypes
     Game.TCOD.Image
     Game.TCOD.List
+    Game.TCOD.MersenneTypes
     Game.TCOD.MouseTypes
     Game.TCOD.System
+    Game.TCOD.Tree
   include-dirs:
     libtcod/include
   c-sources:
     src/Game/TCOD/Bresenham.c
+    src/Game/TCOD/BSP.c
     src/Game/TCOD/Color.c
     src/Game/TCOD/Console.c
     src/Game/TCOD/ConsoleTypes.c
@@ -49,6 +53,7 @@ library
     src/Game/TCOD/Image.c
     src/Game/TCOD/List.c
     src/Game/TCOD/System.c
+    src/Game/TCOD/Tree.c
   build-depends:
       base                      >= 4.7      && < 5
     , bytestring                >= 0.10     && < 0.11
