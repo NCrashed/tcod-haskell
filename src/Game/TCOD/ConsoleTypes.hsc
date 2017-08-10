@@ -4,6 +4,7 @@ module Game.TCOD.ConsoleTypes(
     TCODConsole(..)
   , TCODKeyCode(..)
   , TCODKey(..)
+  , defaultTCODKey
   , tcodKeyTextSize
   , TCODChar(..)
   , TCODColorControl(..)
@@ -124,13 +125,29 @@ data TCODKey = TCODKey {
 , keyShift   :: !Bool
 } deriving (Eq, Show, Generic)
 
+-- | Get 'TCODKey' with default values
+defaultTCODKey :: TCODKey
+defaultTCODKey = TCODKey {
+    keyCode = KeyNone
+  , keyChar = Nothing
+  , keyText = Nothing
+  , keyPressed = False
+  , keyLAlt = False
+  , keyLCtrl = False
+  , keyLMeta = False
+  , keyRAlt = False
+  , keyRCtrl = False
+  , keyRMeta = False
+  , keyShift = False
+  }
+
 instance Storable TCODKey where
   sizeOf _ = #{size TCOD_key_t}
   alignment _ = #{alignment TCOD_key_t}
   poke p TCODKey{..} = withCString (take (tcodKeyTextSize-1) $ fromMaybe "" keyText) $ \text' -> do
     #{poke TCOD_key_t, vk} p ((fromIntegral :: Int -> CInt) . fromEnum $ keyCode)
     #{poke TCOD_key_t, c} p ((fromIntegral :: Int -> CChar) . fromMaybe 0 . fmap ord $ keyChar)
-    [C.exp| void { strcpy(&(TCOD_key_t*)$(void* p')->text, $(const char* text')) } |]
+    [C.exp| void { strcpy(&(((TCOD_key_t*)$(void* p'))->text[0]), $(const char* text')) } |]
     #{poke TCOD_key_t, pressed} p keyPressed
     #{poke TCOD_key_t, lalt} p keyLAlt
     #{poke TCOD_key_t, lctrl} p keyLCtrl
@@ -140,22 +157,28 @@ instance Storable TCODKey where
     #{poke TCOD_key_t, rmeta} p keyRMeta
     #{poke TCOD_key_t, shift} p keyShift
     where p' = castPtr p
-  peek p = TCODKey
-    <$> (toEnum . (fromIntegral :: CInt -> Int) <$> #{peek TCOD_key_t, vk} p)
-    <*> ((\c -> if c == 0 then Nothing else Just $ chr c) . (fromIntegral :: CChar -> Int) <$> #{peek TCOD_key_t, c} p)
-    <*> (peekTextField =<< #{peek TCOD_key_t, text} p)
-    <*> (#{peek TCOD_key_t, pressed} p)
-    <*> (#{peek TCOD_key_t, lalt} p)
-    <*> (#{peek TCOD_key_t, lctrl} p)
-    <*> (#{peek TCOD_key_t, lmeta} p)
-    <*> (#{peek TCOD_key_t, ralt} p)
-    <*> (#{peek TCOD_key_t, rctrl} p)
-    <*> (#{peek TCOD_key_t, rmeta} p)
-    <*> (#{peek TCOD_key_t, shift} p)
+  peek p = do
+    let p' = castPtr p
+    kcode <- toEnum . (fromIntegral :: CInt -> Int) <$> #{peek TCOD_key_t, vk} p
+    c <- peekCharField kcode
+    txt <- peekTextField kcode =<< [C.exp| char* {&((TCOD_key_t*)$(void* p'))->text[0]}|]
+    TCODKey
+      <$> (pure kcode)
+      <*> (pure c)
+      <*> (pure txt)
+      <*> (#{peek TCOD_key_t, pressed} p)
+      <*> (#{peek TCOD_key_t, lalt} p)
+      <*> (#{peek TCOD_key_t, lctrl} p)
+      <*> (#{peek TCOD_key_t, lmeta} p)
+      <*> (#{peek TCOD_key_t, ralt} p)
+      <*> (#{peek TCOD_key_t, rctrl} p)
+      <*> (#{peek TCOD_key_t, rmeta} p)
+      <*> (#{peek TCOD_key_t, shift} p)
     where
-      peekTextField vptr = do
-        str <- peekCString vptr
-        pure $ if null str then Nothing else Just str
+      peekCharField KeyChar = Just . chr . (fromIntegral :: CChar -> Int) <$> #{peek TCOD_key_t, c} p
+      peekCharField _ = pure Nothing
+      peekTextField KeyText vptr = Just <$> peekCString vptr
+      peekTextField _ _ = pure Nothing
 
 -- | Special characters
 data TCODChar =

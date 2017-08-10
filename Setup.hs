@@ -1,4 +1,4 @@
-import Data.Maybe 
+import Data.Maybe
 import Distribution.Simple
 import Distribution.Simple.LocalBuildInfo (LocalBuildInfo(..))
 import Distribution.Simple.Setup

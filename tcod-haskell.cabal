@@ -40,13 +40,16 @@ library
   c-sources:
     src/Game/TCOD/Color.c
     src/Game/TCOD/Console.c
+    src/Game/TCOD/ConsoleTypes.c
     src/Game/TCOD/Image.c
     src/Game/TCOD/List.c
     src/Game/TCOD/System.c
   build-depends:
       base                      >= 4.7      && < 5
+    , bytestring                >= 0.10     && < 0.11
     , containers                >= 0.5      && < 0.6
     , inline-c                  >= 0.5      && < 0.6
+    , sdl2                      >= 2.2      && < 2.3
     , vector                    >= 0.12     && < 0.13
 
   default-language:    Haskell2010

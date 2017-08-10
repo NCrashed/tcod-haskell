@@ -2,6 +2,7 @@
 {-# LANGUAGE CPP                      #-}
 module Game.TCOD.MouseTypes(
     TCODMouse(..)
+  , defaultTCODMouse
   ) where
 
 import Foreign
@@ -28,6 +29,27 @@ data TCODMouse = TCODMouse {
 , mouseWheelUp        :: !Bool -- ^ Wheel up event
 , mouseWheelDown      :: !Bool -- ^ Wheel down event
 } deriving (Eq, Show, Generic)
+
+-- | Get 'TCODMouse' with default values
+defaultTCODMouse :: TCODMouse
+defaultTCODMouse = TCODMouse {
+    mouseX = 0
+  , mouseY = 0
+  , mouseDx = 0
+  , mouseDy = 0
+  , mouseCx = 0
+  , mouseCy = 0
+  , mouseDcx = 0
+  , mouseDcy = 0
+  , mouseLButton = False
+  , mouseRButton = False
+  , mouseMButton = False
+  , mouseLButtonPressed = False
+  , mouseRButtonPressed = False
+  , mouseMButtonPressed = False
+  , mouseWheelUp = False
+  , mouseWheelDown = False
+  }
 
 instance Storable TCODMouse where
   sizeOf _ = #{size TCOD_mouse_t}
