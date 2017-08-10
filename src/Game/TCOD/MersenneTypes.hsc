@@ -2,7 +2,8 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE QuasiQuotes              #-}
 module Game.TCOD.MersenneTypes(
-    Dice(..)
+    TCODRandom(..)
+  , Dice(..)
   , RandomAlgorithm(..)
   , Distribution(..)
   ) where
@@ -11,6 +12,10 @@ import Foreign
 import GHC.Generics
 
 #include "mersenne_types.h"
+
+-- | Reference to TCOD pseudo random generator
+newtype TCODRandom = TCODRandom { unTCODRandom :: Ptr () }
+  deriving (Eq, Ord, Show, Generic)
 
 -- | Dice roll
 data Dice = Dice {

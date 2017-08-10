@@ -48,7 +48,7 @@ Binded headers:
 - [x] mouse_types.h
 - [x] sys.h
 - [x] bresenham.h
-- [ ] bsp.h
+- [x] bsp.h
 - [x] fov_types.h
 - [x] fov.h
 - [ ] heightmap.h
