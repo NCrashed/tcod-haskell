@@ -91,5 +91,25 @@ executable tcod-haskell-sample01
   if flag(examples)
     Buildable: True
   else
+    Buildable: False
+
+executable tcod-haskell-sample02
+  hs-source-dirs:      app/sample02
+  main-is:             Main.hs
+  ghc-options:         -Odph -fno-liberate-case -funfolding-use-threshold1000 -funfolding-keeness-factor1000 -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
+  -- other-modules:
+  build-depends:
+      base
+    , tcod-haskell
+
+  default-extensions:
+    OverloadedStrings
+    RecordWildCards
+    ScopedTypeVariables
+  default-language:    Haskell2010
+
+  if flag(examples)
+    Buildable: True
+  else
     -- Buildable: False
     Buildable: True
