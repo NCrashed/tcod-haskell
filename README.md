@@ -1,6 +1,6 @@
 # tcod-haskell
 
-This is midlevel bindings for [libtcod](https://bitbucket.org/libtcod/libtcod).
+These are midlevel bindings for [libtcod](https://bitbucket.org/libtcod/libtcod).
 
 # Compile
 
@@ -38,26 +38,27 @@ Steps:
 # Roadmap
 
 Binded headers:
-[x] - color_types.h
-[x] - color.h
-[x] - console_types.h
-[x] - console.h
-[x] - list.h
-[x] - impage.h
-[x] - mouse_types.h
-[x] - sys.h
-[ ] - bresenham.h
-[ ] - bsp.h
-[ ] - fov_types.h
-[ ] - fov.h
-[ ] - heightmap.h
-[ ] - libtcod_version.h
-[ ] - mersenne_types.h
-[ ] - mouse.h
-[ ] - namegen.h
-[ ] - noise_defaults.h
-[ ] - noise.h
-[ ] - path.h
-[ ] - tree.h
-[ ] - textfield.h
-[ ] - gui/*.h
+
+- [x] color_types.h
+- [x] color.h
+- [x] console_types.h
+- [x] console.h
+- [x] list.h
+- [x] impage.h
+- [x] mouse_types.h
+- [x] sys.h
+- [ ] bresenham.h
+- [ ] bsp.h
+- [ ] fov_types.h
+- [ ] fov.h
+- [ ] heightmap.h
+- [ ] libtcod_version.h
+- [ ] mersenne_types.h
+- [ ] mouse.h
+- [ ] namegen.h
+- [ ] noise_defaults.h
+- [ ] noise.h
+- [ ] path.h
+- [ ] tree.h
+- [ ] textfield.h
+- [ ] gui/*.h
