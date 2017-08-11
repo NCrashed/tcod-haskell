@@ -5,6 +5,7 @@ module Game.TCOD.Context(
   -- * Types
   , Color(..)
   , TCODHeightMap(..)
+  , Dice(..)
   -- * Reexports
   , C.context
   , C.include
@@ -36,10 +37,19 @@ data Color = Color {
 -- | TCOD heighmap object is represented via 2-dimensional array
 newtype TCODHeightMap = TCODHeightMap { unTCODHeightMap :: Array F DIM2 CFloat }
 
+-- | Dice roll
+data Dice = Dice {
+  diceNbRolls     :: {-# UNPACK #-} !Int
+, diceNbFaces     :: {-# UNPACK #-} !Int
+, diceMultiplier  :: {-# UNPACK #-} !Double
+, diceAddSub      :: {-# UNPACK #-} !Double
+} deriving (Eq, Show, Generic)
+
 tcodContext :: C.Context
 tcodContext = C.baseCtx <> mempty {
     C.ctxTypesTable = [
       (C.TypeName "TCOD_color_t", [t| Color |])
     , (C.TypeName "TCOD_heightmap_t", [t| TCODHeightMap |])
+    , (C.TypeName "TCOD_dice_t", [t| Dice |])
     ]
   }

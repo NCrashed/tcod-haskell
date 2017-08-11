@@ -39,11 +39,13 @@ library
     Game.TCOD.HeightmapInst
     Game.TCOD.Image
     Game.TCOD.List
+    Game.TCOD.Mersenne
     Game.TCOD.MersenneTypes
     Game.TCOD.MouseTypes
     Game.TCOD.Noise
     Game.TCOD.System
     Game.TCOD.Tree
+    Game.TCOD.Version
   include-dirs:
     libtcod/include
   c-sources:
@@ -56,9 +58,11 @@ library
     src/Game/TCOD/Heightmap.c
     src/Game/TCOD/Image.c
     src/Game/TCOD/List.c
+    src/Game/TCOD/Mersenne.c
     src/Game/TCOD/Noise.c
     src/Game/TCOD/System.c
     src/Game/TCOD/Tree.c
+    src/Game/TCOD/Version.c
   build-depends:
       base                      >= 4.7      && < 5
     , bytestring                >= 0.10     && < 0.11
