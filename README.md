@@ -51,7 +51,7 @@ Binded headers:
 - [x] bsp.h
 - [x] fov_types.h
 - [x] fov.h
-- [ ] heightmap.h
+- [x] heightmap.h
 - [ ] libtcod_version.h
 - [x] mersenne_types.h
 - [ ] mersenne.h
