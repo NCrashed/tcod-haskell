@@ -55,7 +55,7 @@ Binded headers:
 - [x] libtcod_version.h
 - [x] mersenne_types.h
 - [x] mersenne.h
-- [ ] mouse.h
+- [x] mouse.h
 - [ ] namegen.h
 - [x] noise_defaults.h
 - [x] noise.h

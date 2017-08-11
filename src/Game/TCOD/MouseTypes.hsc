@@ -6,29 +6,10 @@ module Game.TCOD.MouseTypes(
   ) where
 
 import Foreign
+import Game.TCOD.Context
 import GHC.Generics
 
 #include "mouse_types.h"
-
--- | Mouse event data
-data TCODMouse = TCODMouse {
-  mouseX              :: !Int -- ^ Absolute X position
-, mouseY              :: !Int -- ^ Absolute Y position
-, mouseDx             :: !Int -- ^ Movement X since last update in pixels
-, mouseDy             :: !Int -- ^ Movement Y since last update in pixels
-, mouseCx             :: !Int -- ^ Cell X coordinate in the root console
-, mouseCy             :: !Int -- ^ Cell Y coordinate in the root console
-, mouseDcx            :: !Int -- ^ Movement X since last update in console cells
-, mouseDcy            :: !Int -- ^ Movement Y since last update in console cells
-, mouseLButton        :: !Bool -- ^ Left button status
-, mouseRButton        :: !Bool -- ^ Right button status
-, mouseMButton        :: !Bool -- ^ Middle button status
-, mouseLButtonPressed :: !Bool -- ^ Left button pressed event
-, mouseRButtonPressed :: !Bool -- ^ Right button pressed event
-, mouseMButtonPressed :: !Bool -- ^ Middle button pressed event
-, mouseWheelUp        :: !Bool -- ^ Wheel up event
-, mouseWheelDown      :: !Bool -- ^ Wheel down event
-} deriving (Eq, Show, Generic)
 
 -- | Get 'TCODMouse' with default values
 defaultTCODMouse :: TCODMouse

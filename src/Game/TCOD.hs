@@ -11,6 +11,7 @@ module Game.TCOD(
   , module Game.TCOD.List
   , module Game.TCOD.Mersenne
   , module Game.TCOD.MersenneTypes
+  , module Game.TCOD.Mouse
   , module Game.TCOD.MouseTypes
   , module Game.TCOD.System
   , module Game.TCOD.Tree
@@ -29,6 +30,7 @@ import Game.TCOD.Image
 import Game.TCOD.List
 import Game.TCOD.Mersenne
 import Game.TCOD.MersenneTypes
+import Game.TCOD.Mouse
 import Game.TCOD.MouseTypes
 import Game.TCOD.System
 import Game.TCOD.Tree
