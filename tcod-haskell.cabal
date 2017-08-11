@@ -43,6 +43,7 @@ library
     Game.TCOD.MersenneTypes
     Game.TCOD.Mouse
     Game.TCOD.MouseTypes
+    Game.TCOD.NameGen
     Game.TCOD.Noise
     Game.TCOD.System
     Game.TCOD.Tree
@@ -61,6 +62,7 @@ library
     src/Game/TCOD/List.c
     src/Game/TCOD/Mersenne.c
     src/Game/TCOD/Mouse.c
+    src/Game/TCOD/NameGen.c
     src/Game/TCOD/Noise.c
     src/Game/TCOD/System.c
     src/Game/TCOD/Tree.c
