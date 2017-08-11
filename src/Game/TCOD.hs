@@ -14,6 +14,8 @@ module Game.TCOD(
   , module Game.TCOD.Mouse
   , module Game.TCOD.MouseTypes
   , module Game.TCOD.NameGen
+  , module Game.TCOD.Noise
+  , module Game.TCOD.Path
   , module Game.TCOD.System
   , module Game.TCOD.Tree
   , module Game.TCOD.Version
@@ -34,6 +36,8 @@ import Game.TCOD.MersenneTypes
 import Game.TCOD.Mouse
 import Game.TCOD.MouseTypes
 import Game.TCOD.NameGen
+import Game.TCOD.Noise
+import Game.TCOD.Path
 import Game.TCOD.System
 import Game.TCOD.Tree
 import Game.TCOD.Version
