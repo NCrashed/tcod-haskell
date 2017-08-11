@@ -39,27 +39,35 @@ Steps:
 
 Binded headers:
 
+- [x] bresenham.h
+- [x] bsp.h
 - [x] color_types.h
 - [x] color.h
 - [x] console_types.h
 - [x] console.h
-- [x] list.h
-- [x] impage.h
-- [x] mouse_types.h
-- [x] sys.h
-- [x] bresenham.h
-- [x] bsp.h
 - [x] fov_types.h
 - [x] fov.h
 - [x] heightmap.h
+- [x] image.h
+- [o] lex.h - *not binding* as useless.
+- [o] libtcod_int.h - *not binding* as useless.
+- [o] libtcod_portability.h - *not binding* as useless.
+- [o] libtcod_utility.h - *not binding* as useless.
 - [x] libtcod_version.h
+- [o] libtcod.h - *not binding* as useless.
+- [x] list.h
 - [x] mersenne_types.h
 - [x] mersenne.h
+- [x] mouse_types.h
 - [x] mouse.h
 - [x] namegen.h
 - [x] noise_defaults.h
 - [x] noise.h
 - [x] path.h
+- [o] parser.h - *not binding* as useless.
+- [x] sys.h
 - [x] tree.h
-- [ ] textfield.h
-- [ ] gui/*.h
+- [ ] textfield.h - TODO
+- [o] wrappers.h - *not binding* as useless.
+- [ ] zip.h - TODO
+- [ ] gui/*.h - TODO
