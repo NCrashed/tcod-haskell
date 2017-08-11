@@ -35,10 +35,12 @@ library
     Game.TCOD.Context
     Game.TCOD.Fov
     Game.TCOD.FovTypes
+    Game.TCOD.Heightmap
     Game.TCOD.Image
     Game.TCOD.List
     Game.TCOD.MersenneTypes
     Game.TCOD.MouseTypes
+    Game.TCOD.Noise
     Game.TCOD.System
     Game.TCOD.Tree
   include-dirs:
@@ -50,8 +52,10 @@ library
     src/Game/TCOD/Console.c
     src/Game/TCOD/ConsoleTypes.c
     src/Game/TCOD/Fov.c
+    src/Game/TCOD/Heightmap.c
     src/Game/TCOD/Image.c
     src/Game/TCOD/List.c
+    src/Game/TCOD/Noise.c
     src/Game/TCOD/System.c
     src/Game/TCOD/Tree.c
   build-depends:

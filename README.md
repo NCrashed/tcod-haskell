@@ -57,8 +57,8 @@ Binded headers:
 - [ ] mersenne.h
 - [ ] mouse.h
 - [ ] namegen.h
-- [ ] noise_defaults.h
-- [ ] noise.h
+- [x] noise_defaults.h
+- [x] noise.h
 - [ ] path.h
 - [x] tree.h
 - [ ] textfield.h

@@ -6,6 +6,7 @@ module Game.TCOD(
   , module Game.TCOD.ConsoleTypes
   , module Game.TCOD.Fov
   , module Game.TCOD.FovTypes
+  , module Game.TCOD.Heightmap
   , module Game.TCOD.Image
   , module Game.TCOD.List
   , module Game.TCOD.MersenneTypes
@@ -21,6 +22,7 @@ import Game.TCOD.Console
 import Game.TCOD.ConsoleTypes
 import Game.TCOD.Fov
 import Game.TCOD.FovTypes
+import Game.TCOD.Heightmap
 import Game.TCOD.Image
 import Game.TCOD.List
 import Game.TCOD.MersenneTypes
