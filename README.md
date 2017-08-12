@@ -49,12 +49,12 @@ Binded headers:
 - [x] fov.h
 - [x] heightmap.h
 - [x] image.h
-- [o] lex.h - *not binding* as useless.
-- [o] libtcod_int.h - *not binding* as useless.
-- [o] libtcod_portability.h - *not binding* as useless.
-- [o] libtcod_utility.h - *not binding* as useless.
+- [ ] lex.h - *not binding* as useless.
+- [ ] libtcod_int.h - *not binding* as useless.
+- [ ] libtcod_portability.h - *not binding* as useless.
+- [ ] libtcod_utility.h - *not binding* as useless.
 - [x] libtcod_version.h
-- [o] libtcod.h - *not binding* as useless.
+- [ ] libtcod.h - *not binding* as useless.
 - [x] list.h
 - [x] mersenne_types.h
 - [x] mersenne.h
@@ -64,10 +64,10 @@ Binded headers:
 - [x] noise_defaults.h
 - [x] noise.h
 - [x] path.h
-- [o] parser.h - *not binding* as useless.
+- [ ] parser.h - *not binding* as useless.
 - [x] sys.h
 - [x] tree.h
 - [ ] textfield.h - TODO
-- [o] wrappers.h - *not binding* as useless.
+- [ ] wrappers.h - *not binding* as useless.
 - [ ] zip.h - TODO
 - [ ] gui/*.h - TODO
