@@ -8,15 +8,15 @@ import System.Directory
 import qualified Distribution.PackageDescription as PD
 
 main = defaultMainWithHooks simpleUserHooks {
-    preBuild = \a b -> makeLib a b >> preBuild simpleUserHooks a b
+    preConf = \a b -> makeLib a b >> preConf simpleUserHooks a b
   , confHook = myConfHook
   }
 
-makeLib :: Args -> BuildFlags -> IO ()
+makeLib :: Args -> ConfigFlags -> IO ()
 makeLib _ flags = withCurrentDirectory "libtcod/build/autotools" $ do
-  rawSystemExit (fromFlag $ buildVerbosity flags) "env" ["autoreconf", "-i"]
-  rawSystemExit (fromFlag $ buildVerbosity flags) "env" ["./configure", "CFLAGS=-O2"]
-  rawSystemExit (fromFlag $ buildVerbosity flags) "env" ["make"]
+  rawSystemExit (fromFlag $ configVerbosity flags) "env" ["autoreconf", "-i"]
+  rawSystemExit (fromFlag $ configVerbosity flags) "env" ["./configure", "CFLAGS=-O2"]
+  rawSystemExit (fromFlag $ configVerbosity flags) "env" ["make"]
 
 myConfHook :: (PD.GenericPackageDescription, PD.HookedBuildInfo) -> ConfigFlags -> IO LocalBuildInfo
 myConfHook (description, buildInfo) flags = do

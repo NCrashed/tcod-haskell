@@ -262,7 +262,7 @@ import qualified Data.Map.Strict as M
 import qualified Data.Vector.Storable as V
 
 context tcodContext
-#include "color.h" -- hsc2hs
+#include "color.h"
 include "color.h" -- inline-c
 
 instance Storable Color where
