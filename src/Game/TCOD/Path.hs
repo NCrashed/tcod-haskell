@@ -12,6 +12,7 @@
 -- @@
 module Game.TCOD.Path(
     TCODPathFunc
+  , TCODPathFuncRaw
   , TCODPath(..)
   , pathNewUsingMap
   , pathNewUsingFunction
@@ -33,7 +34,9 @@ import Game.TCOD.Context as C
 import Game.TCOD.Fov
 import GHC.Generics
 
-context (tcodContext <> funConstCtx)
+import Language.C.Inline (mkFunPtr)
+
+context (tcodContext <> funCtx)
 verbatim "#define TCOD_SDL2"
 include "path.h"
 
@@ -45,8 +48,15 @@ include "path.h"
 -- You must not take additional cost due to diagonal movements into account as it's already done by the pathfinder.
 type TCODPathFunc = Int -> Int -> Int -> Int -> IO Double
 
+-- | C type of 'TCODPathFunc'
+type TCODPathFuncRaw = CInt -> CInt -> CInt -> CInt -> Ptr () -> IO CFloat
+
 -- | Reference to TCOD path finder state
-newtype TCODPath = TCODPath { unTCODPath :: Ptr () }
+data TCODPath = TCODPath {
+    unTCODPath  :: Ptr () -- ^ Original pointer
+  -- | Stored reference to callback that need to be freed after cleanup of the path object
+  , pathHaskFun :: Maybe (FunPtr TCODPathFuncRaw)
+  }
   deriving (Eq, Show, Ord, Generic)
 
 -- | Allocating a pathfinder from a map
@@ -59,15 +69,13 @@ pathNewUsingMap :: TCODMap
   -> IO TCODPath
 pathNewUsingMap (TCODMap m) dc = do
   let dc' = realToFrac dc
-  TCODPath <$> [C.exp| void * { TCOD_path_new_using_map($(void* m), $(float dc')) } |]
+  flip TCODPath Nothing <$> [C.exp| void * { TCOD_path_new_using_map($(void* m), $(float dc')) } |]
 
 -- | Allocating a pathfinder using a callback
 --
 -- Since the walkable status of a cell may depend on a lot of parameters
 -- (the creature type, the weather, the terrain type...), you can also create a
 -- path by providing a function rather than relying on a TCODMap.
---
--- Warning: The binding doesn't release pointer to callback.
 pathNewUsingFunction :: Int -- ^ map width
   -> Int -- ^ map height
   -> TCODPathFunc -- ^ A custom function that must return the walk cost from coordinates xFrom,yFrom to coordinates xTo,yTo.
@@ -83,11 +91,16 @@ pathNewUsingFunction mw mh f dc = do
       mh' = fromIntegral mh
       dc' = realToFrac dc
       f' xF yF xT yT _ = realToFrac <$> f (fromIntegral xF) (fromIntegral yF) (fromIntegral xT) (fromIntegral yT)
-  TCODPath <$> [C.exp| void * { TCOD_path_new_using_function($(int mw'), $(int mh'), $funConst:(float (*f')(int, int, int, int, void*)), NULL, $(float dc'))} |]
+  callback <- $(mkFunPtr [t| CInt -> CInt -> CInt -> CInt -> Ptr () -> IO CFloat |]) f'
+  let callback' = castFunPtrToPtr callback
+  ptr <- [C.exp| void * { TCOD_path_new_using_function($(int mw'), $(int mh'), (TCOD_path_func_t)$(void* callback'), NULL, $(float dc'))} |]
+  pure $ TCODPath ptr (Just callback)
 
 -- | To release the resources used by a path, destroy it
 pathDelete :: TCODPath -> IO ()
-pathDelete (TCODPath p) = [C.exp| void {TCOD_path_delete($(void* p))} |]
+pathDelete (TCODPath p mc) = do
+  [C.exp| void {TCOD_path_delete($(void* p))} |]
+  maybe (pure ()) freeHaskellFunPtr mc
 
 -- | Computing an A* path
 --
@@ -100,7 +113,7 @@ pathCompute :: TCODPath
   -> Int -- ^ dx. Coordinates of the destination of the path.
   -> Int -- ^ dy. Coordinates of the destination of the path.
   -> IO Bool
-pathCompute (TCODPath p) ox oy dx dy = do
+pathCompute (TCODPath p _) ox oy dx dy = do
   let ox' = fromIntegral ox
       oy' = fromIntegral oy
       dx' = fromIntegral dx
@@ -118,7 +131,7 @@ pathCompute (TCODPath p) ox oy dx dy = do
 pathWalk :: TCODPath
   -> Bool -- ^ recalculate when needed. If the next point is no longer walkable (another creature may be in the way), recalculate a new path and walk it.
   -> IO (Bool, Int, Int)
-pathWalk (TCODPath p) r = alloca $ \x -> alloca $ \y-> do
+pathWalk (TCODPath p _) r = alloca $ \x -> alloca $ \y-> do
   let r' = fromBool r
   fin <- toBool <$> [C.exp| int {(int)TCOD_path_walk($(void* p), $(int* x), $(int* y), $(int r')!=0)}|]
   let pk = fmap fromIntegral . peek
@@ -126,17 +139,17 @@ pathWalk (TCODPath p) r = alloca $ \x -> alloca $ \y-> do
 
 -- | Check is path has no steps
 pathIsEmpty :: TCODPath -> IO Bool
-pathIsEmpty (TCODPath p) = toBool <$> [C.exp| int {(int)TCOD_path_is_empty($(void* p))}|]
+pathIsEmpty (TCODPath p _) = toBool <$> [C.exp| int {(int)TCOD_path_is_empty($(void* p))}|]
 
 -- | Get number of steps the path consists of
 pathSize :: TCODPath -> IO Int
-pathSize (TCODPath p) = fromIntegral <$> [C.exp| int { TCOD_path_size($(void * p))}|]
+pathSize (TCODPath p _) = fromIntegral <$> [C.exp| int { TCOD_path_size($(void * p))}|]
 
 -- | Reversing a path
 --
 -- Once you computed a path, you can exchange origin and destination
 pathReverse :: TCODPath -> IO ()
-pathReverse (TCODPath p) = [C.exp| void {TCOD_path_reverse($(void* p))} |]
+pathReverse (TCODPath p _) = [C.exp| void {TCOD_path_reverse($(void* p))} |]
 
 -- | Read the path cells' coordinates
 --
@@ -144,7 +157,7 @@ pathReverse (TCODPath p) = [C.exp| void {TCOD_path_reverse($(void* p))} |]
 pathGet :: TCODPath
   -> Int -- ^ index. Step number. 0 <= index < path size
   -> IO (Int, Int)
-pathGet (TCODPath p) i = alloca $ \x -> alloca $ \y -> do
+pathGet (TCODPath p _) i = alloca $ \x -> alloca $ \y -> do
   let i' = fromIntegral i
   [C.exp| void {TCOD_path_get($(void* p), $(int i'), $(int* x), $(int* y))}|]
   let pk = fmap fromIntegral . peek
@@ -152,14 +165,14 @@ pathGet (TCODPath p) i = alloca $ \x -> alloca $ \y -> do
 
 -- | Get origin/start of the path
 pathGetOrigin :: TCODPath -> IO (Int, Int)
-pathGetOrigin (TCODPath p) = alloca $ \x -> alloca $ \y -> do
+pathGetOrigin (TCODPath p _) = alloca $ \x -> alloca $ \y -> do
   [C.exp| void {TCOD_path_get_origin($(void* p), $(int* x), $(int* y))}|]
   let pk = fmap fromIntegral . peek
   (,) <$> pk x <*> pk y
 
 -- | Get destination/end of the path
 pathGetDesitnation :: TCODPath -> IO (Int, Int)
-pathGetDesitnation (TCODPath p) = alloca $ \x -> alloca $ \y -> do
+pathGetDesitnation (TCODPath p _) = alloca $ \x -> alloca $ \y -> do
   [C.exp| void {TCOD_path_get_destination($(void* p), $(int* x), $(int* y))}|]
   let pk = fmap fromIntegral . peek
   (,) <$> pk x <*> pk y

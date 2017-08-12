@@ -14,7 +14,6 @@ module Game.TCOD.Context(
   , C.exp
   , C.block
   , C.funCtx
-  , C.funConstCtx
   ) where
 
 import qualified Language.C.Inline as C

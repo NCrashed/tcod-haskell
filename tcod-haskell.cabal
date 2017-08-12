@@ -103,7 +103,6 @@ executable tcod-haskell-sample01
   hs-source-dirs:      app/sample01
   main-is:             Main.hs
   ghc-options:         -Odph -fno-liberate-case -funfolding-use-threshold1000 -funfolding-keeness-factor1000 -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
-  -- other-modules:
   build-depends:
       base
     , tcod-haskell
@@ -123,7 +122,6 @@ executable tcod-haskell-sample02
   hs-source-dirs:      app/sample02
   main-is:             Main.hs
   ghc-options:         -Odph -fno-liberate-case -funfolding-use-threshold1000 -funfolding-keeness-factor1000 -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
-  -- other-modules:
   build-depends:
       base
     , tcod-haskell
@@ -143,7 +141,6 @@ executable tcod-haskell-sample03
   hs-source-dirs:      app/sample03
   main-is:             Main.hs
   ghc-options:         -Odph -fno-liberate-case -funfolding-use-threshold1000 -funfolding-keeness-factor1000 -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
-  -- other-modules:
   build-depends:
       base
     , tcod-haskell
@@ -157,5 +154,4 @@ executable tcod-haskell-sample03
   if flag(examples)
     Buildable: True
   else
-    -- Buildable: False
-    Buildable: True
+    Buildable: False
