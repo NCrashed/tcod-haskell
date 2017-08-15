@@ -15,7 +15,7 @@ extra-source-files:
   CHANGELOG.md
   stack.yaml
   terminal.png
-  include/externa/*.h
+  include/external/*.h
 cabal-version:       >=1.10
 
 flag examples
