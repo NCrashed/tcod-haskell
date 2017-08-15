@@ -28,8 +28,8 @@ import Game.TCOD.Context as C
 import qualified Data.Foldable as F
 
 context tcodContext
-#include "console_types.h"
-include "console_types.h"
+#include "libtcod/console_types.h"
+include "libtcod/console_types.h"
 include "string.h"
 
 -- | Tag to track pointer to `TCOD_console_t`

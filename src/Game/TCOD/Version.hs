@@ -3,14 +3,14 @@ module Game.TCOD.Version(
   , tcodVersion
   , tcodVersionName
   , tcodTechVersion
-  ) where 
+  ) where
 
 import Game.TCOD.Context as C
 import System.IO.Unsafe (unsafePerformIO)
 import Foreign.C
 
 context tcodContext
-include "libtcod_version.h"
+include "libtcod/libtcod_version.h"
 
 tcodHexVersion :: Word
 tcodHexVersion = unsafePerformIO $ fromIntegral <$> [C.exp| int {TCOD_HEXVERSION} |]

@@ -24,7 +24,7 @@ import GHC.Generics
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "fov.h"
+include "libtcod/fov.h"
 
 -- | Map reference for FOV algorithm
 newtype TCODMap = TCODMap { unTCODMap :: Ptr () }

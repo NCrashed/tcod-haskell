@@ -29,7 +29,7 @@ import Game.TCOD.Noise
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "mersenne.h"
+include "libtcod/mersenne.h"
 
 -- | Default generator
 --

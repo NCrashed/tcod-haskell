@@ -63,8 +63,8 @@ import qualified Data.Set as S
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "libtcod_portability.h"
-include "sys.h"
+include "libtcod/libtcod_portability.h"
+include "libtcod/sys.h"
 
 -- | Initialize global TCOD reference for system
 systemStartup :: IO ()

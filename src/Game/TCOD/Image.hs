@@ -34,8 +34,8 @@ import Game.TCOD.Context as C
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "libtcod_portability.h"
-include "image.h"
+include "libtcod/libtcod_portability.h"
+include "libtcod/image.h"
 
 -- | TCOD image
 newtype TCODImage = TCODImage { unTCODImage :: Ptr () }

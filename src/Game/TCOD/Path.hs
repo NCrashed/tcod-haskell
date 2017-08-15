@@ -38,7 +38,7 @@ import Language.C.Inline (mkFunPtr)
 
 context (tcodContext <> funCtx)
 verbatim "#define TCOD_SDL2"
-include "path.h"
+include "libtcod/path.h"
 
 -- | Callback path function, takes from (x, y) and to (x, y), returns cell cost
 --

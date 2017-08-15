@@ -89,7 +89,7 @@ import Text.Printf
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "console.h"
+include "libtcod/console.h"
 
 -- | Creating the game window
 consoleInitRoot :: Int -- ^ w size of the console(in characters). The default font in libtcod (./terminal.png) uses 8x8 pixels characters.

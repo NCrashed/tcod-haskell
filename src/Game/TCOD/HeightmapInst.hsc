@@ -9,7 +9,7 @@ import Data.Array.Repa (extent, Z(..), (:.)(..))
 import Data.Array.Repa.Repr.ForeignPtr
 import Foreign
 
-#include "heightmap.h"
+#include "libtcod/heightmap.h"
 
 instance Storable TCODHeightMap where
   sizeOf _ = #{size TCOD_heightmap_t}

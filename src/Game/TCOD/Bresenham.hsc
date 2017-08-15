@@ -25,8 +25,8 @@ import System.IO.Unsafe (unsafePerformIO)
 
 context (tcodContext <> funCtx)
 verbatim "#define TCOD_SDL2"
-include "bresenham.h"
-#include "bresenham.h"
+include "libtcod/bresenham.h"
+#include "libtcod/bresenham.h"
 
 -- | Takes x y of point and tells when to stop
 type TCODLineListener = Int -> Int -> IO Bool

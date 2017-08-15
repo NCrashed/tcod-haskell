@@ -262,8 +262,8 @@ import qualified Data.Map.Strict as M
 import qualified Data.Vector.Storable as V
 
 context tcodContext
-#include "color.h"
-include "color.h" -- inline-c
+#include "libtcod/color.h"
+include "libtcod/color.h" -- inline-c
 
 instance Storable Color where
   sizeOf    _ = #{size TCOD_color_t}

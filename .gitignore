@@ -1,14 +1,7 @@
 .stack-work
-
-# tcod garbage
-libtcod/samples/.deps/
-libtcod/samples/.dirstamp
-libtcod/src/.deps/
-libtcod/src/.dirstamp
-libtcod/src/gui/.deps/
-libtcod/src/gui/.dirstamp
-libtcod/src/png/.deps/
-libtcod/src/png/.dirstamp
+.cabal-sandbox/
+cabal.sandbox.config
+dist/
 
 # generated C files 
 src/Game/TCOD/*.c

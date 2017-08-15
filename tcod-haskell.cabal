@@ -1,5 +1,5 @@
 name:                tcod-haskell
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            Bindings to libtcod roguelike engine
 description:         Haskell bindings for popular library for making roguelike games
 homepage:            https://github.com/ncrashed/tcod-haskell#readme
@@ -9,67 +9,21 @@ author:              Anton Gushcha
 maintainer:          ncrashed@gmail.com
 copyright:           2017 Anton Gushcha
 category:            Game
-build-type:          Custom
+build-type:          Simple
 extra-source-files:
   README.md
+  CHANGELOG.md
   stack.yaml
   terminal.png
-  libtcod/include/*.h
-  libtcod/include/*.hpp
-  libtcod/include/external/*.h
-  libtcod/include/gui/*.hpp
-  libtcod/src/*.c
-  libtcod/src/*.cpp
-  libtcod/src/gui/*.cpp
-  libtcod/src/png/*.c
-  libtcod/src/png/*.h
-  libtcod/src/zlib/*.h
-  libtcod/src/zlib/*.c
-  libtcod/LIBTCOD-CREDITS.txt
-  libtcod/LIBTCOD-LICENSE.txt
-  libtcod/build/autotools/configure.ac
-  libtcod/build/autotools/Makefile.am
-  libtcod/build/autotools/m4/*.m4
-  libtcod/samples/*.c
-  libtcod/samples/*.cpp
-  libtcod/samples/doctcod/*.cpp
-  libtcod/samples/doctcod/*.tpl
-  libtcod/samples/frost/*.cpp
-  libtcod/samples/hmtool/*.cpp
-  libtcod/samples/hmtool/*.hpp
-  libtcod/samples/navier/*.cpp
-  libtcod/samples/navier/*.hpp
-  libtcod/samples/rad/*.cpp
-  libtcod/samples/rad/*.hpp
-  libtcod/samples/rad/*.png
-  libtcod/samples/ripples/*.cpp
-  libtcod/samples/ripples/*.hpp
-  libtcod/samples/weather/*.cpp
-  libtcod/samples/weather/*.hpp
-  libtcod/samples/worldgen/*.cpp
-  libtcod/samples/worldgen/*.hpp
-  libtcod/samples/worldgen/*.png
-  libtcod/build.bat
-  libtcod/libtcod.cfg
-  libtcod/terminal.png
-  libtcod/data/img/*.png
-  libtcod/data/namegen/*.cfg
-  libtcod/data/namegen/*.txt
-  libtcod/data/rexpaint/*.xp
-  libtcod/data/cfg/*.cfg
-  libtcod/data/fonts/*.png
-  libtcod/data/fonts/*.txt
 cabal-version:       >=1.10
-
-custom-setup
-  setup-depends:
-      base        >= 4.5     && < 4.11
-    , Cabal                     < 1.25
-    , directory   >= 1.0     && < 2.0
 
 flag examples
   description: build engine examples
   default: False
+
+flag use-pkg-config
+  Description: Use pkg-config to check for library dependences
+  Default: False
 
 library
   hs-source-dirs:      src
@@ -97,8 +51,7 @@ library
     Game.TCOD.System
     Game.TCOD.Tree
     Game.TCOD.Version
-  include-dirs:
-    libtcod/include
+  include-dirs: include
   c-sources:
     src/Game/TCOD/Bresenham.c
     src/Game/TCOD/BSP.c
@@ -141,7 +94,11 @@ library
     ScopedTypeVariables
     TemplateHaskell
     TypeFamilies
-  extra-libraries: tcod
+
+  if flag(use-pkg-config)
+    pkgconfig-depends: libtcod >= 1.6
+  else
+    extra-libraries: tcod
 
 source-repository head
   type:     git

@@ -12,7 +12,7 @@ import Foreign
 import GHC.Generics
 import Game.TCOD.Context
 
-#include "mersenne_types.h"
+#include "libtcod/mersenne_types.h"
 
 -- | Reference to TCOD pseudo random generator
 newtype TCODRandom = TCODRandom { unTCODRandom :: Ptr () }

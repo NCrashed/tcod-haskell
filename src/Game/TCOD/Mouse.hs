@@ -15,7 +15,7 @@ import Game.TCOD.Noise
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "mouse.h"
+include "libtcod/mouse.h"
 
 -- | Display and hide the mouse cursor
 --

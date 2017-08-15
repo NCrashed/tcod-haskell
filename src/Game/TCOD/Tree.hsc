@@ -15,9 +15,9 @@ import Game.TCOD.Context as C
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "libtcod_portability.h"
-include "tree.h"
-#include "tree.h"
+include "libtcod/libtcod_portability.h"
+include "libtcod/tree.h"
+#include "libtcod/tree.h"
 
 -- | Rose tree implemented in TCOD
 data TCODTree a = TCODTree {

@@ -18,7 +18,7 @@ import GHC.Generics
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "namegen.h"
+include "libtcod/namegen.h"
 
 -- | Reference to name generator state
 newtype TCODNameGen = TCODNameGen { unTCODNameGen :: Ptr () }

@@ -9,7 +9,7 @@ import Foreign
 import Game.TCOD.Context
 import GHC.Generics
 
-#include "mouse_types.h"
+#include "libtcod/mouse_types.h"
 
 -- | Get 'TCODMouse' with default values
 defaultTCODMouse :: TCODMouse

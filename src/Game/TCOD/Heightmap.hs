@@ -44,7 +44,7 @@ import qualified Data.Vector.Storable as V
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "heightmap.h"
+include "libtcod/heightmap.h"
 
 -- | Allocate new heightmap with given sizes
 heightmapNew :: Int -> Int -> IO TCODHeightMap

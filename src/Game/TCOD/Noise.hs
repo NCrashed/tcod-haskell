@@ -28,7 +28,7 @@ import qualified Data.Vector.Storable as V
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "noise.h"
+include "libtcod/noise.h"
 
 -- | Reference to TCOD noise object
 newtype TCODNoise = TCODNoise { unTCODNoise :: Ptr () }

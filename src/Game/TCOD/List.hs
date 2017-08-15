@@ -49,7 +49,7 @@ import qualified Data.Vector.Storable as V
 import Game.TCOD.Context as C
 
 context tcodContext
-include "list.h"
+include "libtcod/list.h"
 
 -- | This is a fast, lightweight and generic container, that provides array,
 -- list and stack paradigms.

@@ -37,8 +37,8 @@ import GHC.Generics
 
 context (tcodContext <> funCtx)
 verbatim "#define TCOD_SDL2"
-include "bsp.h"
-#include "bsp.h"
+include "libtcod/bsp.h"
+#include "libtcod/bsp.h"
 
 -- | Data for BSP of map
 data BSP = BSP {
