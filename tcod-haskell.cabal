@@ -1,5 +1,5 @@
 name:                tcod-haskell
-version:             0.2.1.0
+version:             0.3.0.0
 synopsis:            Bindings to libtcod roguelike engine
 description:         Haskell bindings for popular library for making roguelike games
 homepage:            https://github.com/ncrashed/tcod-haskell#readme
