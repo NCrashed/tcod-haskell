@@ -79,7 +79,7 @@ library
     TypeFamilies
 
   if flag(use-pkg-config)
-    pkgconfig-depends: libtcod >= 1.6
+    pkgconfig-depends: libtcod >= 1.8.2
   else
     extra-libraries: tcod
 

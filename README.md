@@ -31,9 +31,17 @@ Needed system libraries:
 
 Steps:
 1. Install `stack` or `cabal`+`GHC` from https://www.haskell.org/downloads
-2. Install `libtcod` in your system (version `>= 1.6.3`).
+2. Install `libtcod` in your system (version `>= 1.8.2`).
 3. Run `stack install --flags tcod-haskell:examples` or `cabal sandbox new && cabal install --flags=examples`
 4. Run example `tcod-haskell-sample01` in root folder of repo (or copy `terminal.png` to execution directory).
+
+# Nix pipeline
+
+Steps:
+1. Install [Nix](https://nixos.org/nix/)
+2. Run `nix-build`
+3. For interactive shell `nis-shell`
+4. Run example in shell `cabal new-run --flag examples tcod-haskell-sample01`
 
 # Roadmap
 
