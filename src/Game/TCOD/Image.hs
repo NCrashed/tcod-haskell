@@ -34,7 +34,7 @@ import Game.TCOD.Context as C
 
 context tcodContext
 verbatim "#define TCOD_SDL2"
-include "libtcod/libtcod_portability.h"
+include "libtcod/portability.h"
 include "libtcod/image.h"
 
 -- | TCOD image

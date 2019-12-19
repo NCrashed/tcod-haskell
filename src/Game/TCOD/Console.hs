@@ -45,8 +45,6 @@ module Game.TCOD.Console(
   , consoleGetCharBackground
   , consoleGetCharForeground
   , consoleGetChar
-  , consoleGetBackgroundColorImage
-  , consoleGetForegroundColorImage
   , consoleSetFade
   , consoleGetFade
   , consoleGetFadingColor
@@ -789,20 +787,6 @@ consoleGetChar (TCODConsole l) x y = do
   let x' = fromIntegral x
       y' = fromIntegral y
   chr . fromIntegral <$> [C.exp| int { TCOD_console_get_char($(void* l), $(int x'), $(int y'))} |]
-
--- | Manipulating background colors as an image
---
--- This function obtains the image containing the console background colors.
-consoleGetBackgroundColorImage :: TCODConsole -- ^ the offscreen console handler or NULL for the root console
-  -> IO TCODImage
-consoleGetBackgroundColorImage (TCODConsole l) = TCODImage <$> [C.exp| void* { TCOD_console_get_background_color_image($(void* l)) }|]
-
--- | Manipulating foreground colors as an image
---
--- This function obtains the image containing the console foreground colors.
-consoleGetForegroundColorImage :: TCODConsole -- ^ the offscreen console handler or NULL for the root console
-  -> IO TCODImage
-consoleGetForegroundColorImage (TCODConsole l) = TCODImage <$> [C.exp| void* { TCOD_console_get_foreground_color_image($(void* l)) }|]
 
 -- | Changing the fading parameters
 --

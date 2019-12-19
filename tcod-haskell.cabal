@@ -1,5 +1,5 @@
 name:                tcod-haskell
-version:             0.2.0.0
+version:             0.2.1.0
 synopsis:            Bindings to libtcod roguelike engine
 description:         Haskell bindings for popular library for making roguelike games
 homepage:            https://github.com/ncrashed/tcod-haskell#readme
@@ -24,7 +24,7 @@ flag examples
 
 flag use-pkg-config
   Description: Use pkg-config to check for library dependences
-  Default: False
+  Default: True
 
 library
   hs-source-dirs:      src
@@ -53,31 +53,13 @@ library
     Game.TCOD.Tree
     Game.TCOD.Version
   include-dirs: include
-  c-sources:
-    src/Game/TCOD/Bresenham.c
-    src/Game/TCOD/BSP.c
-    src/Game/TCOD/Color.c
-    src/Game/TCOD/Console.c
-    src/Game/TCOD/ConsoleTypes.c
-    src/Game/TCOD/Fov.c
-    src/Game/TCOD/Heightmap.c
-    src/Game/TCOD/Image.c
-    src/Game/TCOD/List.c
-    src/Game/TCOD/Mersenne.c
-    src/Game/TCOD/Mouse.c
-    src/Game/TCOD/NameGen.c
-    src/Game/TCOD/Noise.c
-    src/Game/TCOD/Path.c
-    src/Game/TCOD/System.c
-    src/Game/TCOD/Tree.c
-    src/Game/TCOD/Version.c
   build-depends:
       base                      >= 4.7      && < 5
     , bytestring                >= 0.10     && < 0.11
-    , containers                >= 0.5      && < 0.6
-    , inline-c                  >= 0.5      && < 0.6
+    , containers                >= 0.5      && < 0.7
+    , inline-c                  >= 0.5      && < 0.8
     , repa                      >= 3.4      && < 3.5
-    , sdl2                      >= 2.2      && < 2.3
+    , sdl2                      >= 2.2      && < 2.6
     , vector                    >= 0.12     && < 0.13
 
   default-language:    Haskell2010
@@ -108,7 +90,7 @@ source-repository head
 executable tcod-haskell-sample01
   hs-source-dirs:      app/sample01
   main-is:             Main.hs
-  ghc-options:         -Odph -fno-liberate-case -funfolding-use-threshold1000 -funfolding-keeness-factor1000 -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base
     , tcod-haskell
@@ -118,7 +100,7 @@ executable tcod-haskell-sample01
     RecordWildCards
     ScopedTypeVariables
   default-language:    Haskell2010
-
+  extra-libraries: tcod
   if flag(examples)
     Buildable: True
   else
@@ -127,11 +109,11 @@ executable tcod-haskell-sample01
 executable tcod-haskell-sample02
   hs-source-dirs:      app/sample02
   main-is:             Main.hs
-  ghc-options:         -Odph -fno-liberate-case -funfolding-use-threshold1000 -funfolding-keeness-factor1000 -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base
     , tcod-haskell
-
+  extra-libraries: tcod
   default-extensions:
     OverloadedStrings
     RecordWildCards
@@ -146,11 +128,11 @@ executable tcod-haskell-sample02
 executable tcod-haskell-sample03
   hs-source-dirs:      app/sample03
   main-is:             Main.hs
-  ghc-options:         -Odph -fno-liberate-case -funfolding-use-threshold1000 -funfolding-keeness-factor1000 -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -optlo-O3 -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base
     , tcod-haskell
-
+  extra-libraries: tcod
   default-extensions:
     OverloadedStrings
     RecordWildCards

@@ -10,7 +10,7 @@ import System.IO.Unsafe (unsafePerformIO)
 import Foreign.C
 
 context tcodContext
-include "libtcod/libtcod_version.h"
+include "libtcod/version.h"
 
 tcodHexVersion :: Word
 tcodHexVersion = unsafePerformIO $ fromIntegral <$> [C.exp| int {TCOD_HEXVERSION} |]

@@ -2,6 +2,7 @@
 .cabal-sandbox/
 cabal.sandbox.config
 dist/
+dist-newstyle/
 
-# generated C files 
+# generated C files
 src/Game/TCOD/*.c
